@@ -1,7 +1,7 @@
 ﻿import { useApp } from '../store';
 import { CATEGORY_COLOR } from '../utils/matching';
 import { EditIcon, TrashIcon, PlusIcon, SwapIcon } from '../components/Icons';
-import { SquiggleArrow, HalfRingDoodle } from '../components/Doodles';
+import { SquiggleArrow, HalfRingDoodle, CrownDoodle } from '../components/Doodles';
 import { SkillChip } from '../components/SwapPrimitives';
 import EmptyState from '../components/EmptyState';
 import type { TeachSkill, LearnSkill } from '../types';
@@ -67,7 +67,12 @@ export default function MySkills() {
 
   return (
     <div className="animate-fade mx-auto max-w-4xl px-6 py-8 sm:py-10">
-      <h1 className="section-title">我的技能</h1>
+      <h1 className="text-2xl font-bold text-[#211c16]">
+        <span className="relative inline-block">
+          我的技能
+          <CrownDoodle className="absolute -right-9 -top-4 w-8 rotate-[12deg] text-[#eeb64f]" />
+        </span>
+      </h1>
       <p className="section-sub">把你愿意教的、想学的都放进来，匹配会更准。</p>
 
       {noSkills && (

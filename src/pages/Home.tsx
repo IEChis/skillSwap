@@ -8,7 +8,8 @@ import {
   ArcDoodle,
   HalfRingDoodle,
   CardLinkArrows,
-  CurlyUnderline,
+  CircleScribble,
+  QuickLines,
 } from '../components/Doodles';
 
 export default function Home() {
@@ -45,9 +46,16 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pb-10 pt-12 sm:pt-16 lg:grid-cols-2">
           {/* 左：slogan + 大标题 + 唯一 CTA */}
           <div>
-            <p className="relative inline-block text-sm font-bold text-[#6a4fe0]">
-              技能交换 · 遇见更大的自己
-              <CurlyUnderline className="absolute -bottom-2 left-0 h-2 w-full text-[#c9bcf8]" />
+            <p className="text-sm font-bold text-[#6a4fe0]">
+              <span className="relative inline-block px-1.5">
+                技能交换
+                <CircleScribble className="pointer-events-none absolute -left-1.5 -top-1.5 !h-[calc(100%+10px)] !w-[calc(100%+12px)] text-[#c9bcf8]" />
+              </span>
+              {' · '}
+              <span className="relative inline-block">
+                遇见更好的自己
+                <QuickLines className="pointer-events-none absolute -bottom-2.5 left-0 h-2.5 w-full text-[#c9bcf8]" />
+              </span>
             </p>
             <h1 className="display mt-5">
               你会什么？
@@ -94,7 +102,14 @@ export default function Home() {
             <button
               onClick={() => navigate('find')}
               className="swap-card absolute bottom-10 right-0 w-44 rotate-6 p-4 text-left"
-              style={{ borderColor: '#fec9b7' }}
+              style={
+                {
+                  borderColor: '#fec9b7',
+                  '--swap-glow-border': '#f6b294',
+                  '--swap-glow': 'rgba(242, 162, 75, 0.35)',
+                  '--swap-glow-soft': 'rgba(242, 162, 75, 0.08)',
+                } as React.CSSProperties
+              }
             >
               <span className="text-xs font-bold text-[#bc4424]">我想学</span>
               <div className="mt-2.5 flex items-center justify-between gap-2">
@@ -125,7 +140,17 @@ export default function Home() {
               <p className="mt-1 text-base font-extrabold">Python</p>
             </div>
             <SwapIcon width={20} height={20} className="animate-swap shrink-0 text-[#6a4fe0]" />
-            <div className="swap-card w-32 rotate-3 p-3" style={{ borderColor: '#fec9b7' }}>
+            <div
+              className="swap-card w-32 rotate-3 p-3"
+              style={
+                {
+                  borderColor: '#fec9b7',
+                  '--swap-glow-border': '#f6b294',
+                  '--swap-glow': 'rgba(242, 162, 75, 0.35)',
+                  '--swap-glow-soft': 'rgba(242, 162, 75, 0.08)',
+                } as React.CSSProperties
+              }
+            >
               <p className="text-[11px] font-bold text-[#bc4424]">我想学</p>
               <p className="mt-1 text-base font-extrabold">摄影</p>
             </div>
@@ -168,8 +193,11 @@ export default function Home() {
                 已经有 <span className="font-bold text-[#211c16]">{matches.length}</span> 个人和你刚好互补
               </p>
             </div>
-            <button className="link-cta" onClick={() => navigate('matches')}>
-              看看是谁 →
+            <button className="link-cta group" onClick={() => navigate('matches')}>
+              看看是谁
+              <span className="ml-1 inline-block transition-transform duration-200 group-hover:translate-x-1.5">
+                →
+              </span>
             </button>
           </div>
         </section>

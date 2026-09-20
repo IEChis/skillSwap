@@ -78,13 +78,13 @@ export function ConnectionLine({
 }) {
   if (to === 'bi') {
     return (
-      <svg viewBox="0 0 64 30" className={className} fill="none" aria-hidden>
-        {/* 紫：左 → 右（我教你） */}
-        <path d="M4 19C16 9 34 9 32 15" stroke="#6a4fe0" strokeWidth="2" strokeLinecap="round" />
-        <path d="M26 12l6 3-4 4" stroke="#6a4fe0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        {/* 橙：右 → 左（TA 教你） */}
-        <path d="M60 11C48 21 30 21 32 15" stroke="#f2734e" strokeWidth="2" strokeLinecap="round" />
-        <path d="M38 18l-6-3 4-4" stroke="#f2734e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <svg viewBox="0 0 64 38" className={className} fill="none" aria-hidden>
+        {/* 紫：上方一道弧，左 → 右（我教你） */}
+        <path d="M5 14C18 4 46 4 58 13" stroke="#6a4fe0" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M51 6l8 6.5-10 3" stroke="#6a4fe0" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        {/* 橙：下方一道弧，右 → 左（TA 教你） */}
+        <path d="M59 24C46 34 18 34 6 25" stroke="#f2734e" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M13 32l-8-6.5 10-3" stroke="#f2734e" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   }
@@ -131,8 +131,10 @@ export function ExchangeCard({
 }) {
   const side = (label: string, skill: string, variant: 'teach' | 'learn', rotate: string) => (
     <div
-      className={`flex flex-1 flex-col rounded-2xl border p-4 ${
-        variant === 'teach' ? 'border-[#d9d0fb] bg-[#f1edfd]' : 'border-[#fbd3c5] bg-[#fdebe3]'
+      className={`flex flex-1 flex-col rounded-2xl border bg-[#fffdf9] p-4 transform-gpu will-change-transform transition-[transform,box-shadow] duration-300 ease-out ${
+        variant === 'teach'
+          ? 'border-[#d9d0fb] group-hover:-translate-y-1 group-hover:-translate-x-0.5 group-hover:rotate-0 group-hover:shadow-[0_16px_30px_-18px_rgba(106,79,224,0.4)]'
+          : 'border-[#fbd3c5] group-hover:-translate-y-1 group-hover:translate-x-0.5 group-hover:rotate-0 group-hover:shadow-[0_16px_30px_-18px_rgba(242,115,78,0.4)]'
       } ${tilt ? rotate : ''}`}
     >
       <span className={`text-xs font-bold ${variant === 'teach' ? 'text-[#5739c4]' : 'text-[#bc4424]'}`}>
@@ -143,10 +145,15 @@ export function ExchangeCard({
   );
 
   return (
-    <div className={`flex items-stretch gap-2 sm:gap-3 ${className}`}>
+    <div className={`group flex items-stretch gap-2 sm:gap-3 ${className}`}>
       {side(leftLabel, leftSkill, leftVariant, tilt ? '-rotate-2' : '')}
       <div className="flex shrink-0 items-center justify-center">
-        {centerNode ?? <ConnectionLine to="bi" className="w-8 sm:w-10" />}
+        {centerNode ?? (
+          <ConnectionLine
+            to="bi"
+            className="w-8 transform-gpu transition-[transform] duration-300 ease-out group-hover:rotate-6 group-hover:scale-110 sm:w-10"
+          />
+        )}
       </div>
       {side(rightLabel, rightSkill, rightVariant, tilt ? 'rotate-2' : '')}
     </div>

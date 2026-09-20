@@ -3,7 +3,7 @@ import { useApp } from '../store';
 import { CATEGORIES } from '../data/skills';
 import { getSkillStats, norm, CATEGORY_COLOR } from '../utils/matching';
 import { SearchIcon, ArrowLeftIcon } from '../components/Icons';
-import { CurlyUnderline } from '../components/Doodles';
+import { MagnifierDoodle } from '../components/Doodles';
 import { SkillChip } from '../components/SwapPrimitives';
 import type { Category } from '../types';
 
@@ -46,9 +46,12 @@ export default function FindSkills() {
   return (
     <div className="animate-fade mx-auto max-w-6xl px-6 py-8 sm:py-10">
       {/* 标题：带一点手绘感点缀 */}
-      <h1 className="heading relative w-fit">
-        找到你想学的技能
-        <CurlyUnderline className="absolute -bottom-2 left-0 h-2 w-full text-[#c9bcf8]" />
+      <h1 className="text-2xl font-bold w-fit text-[#211c16]">
+        找到你想学的
+        <span className="relative inline-block">
+          技能
+          <MagnifierDoodle className="absolute -right-[52px] -top-5 w-12 -rotate-10 text-[#a394ec]" />
+        </span>
       </h1>
       <p className="mt-3 text-sm text-[#5c5446]">看看大家都在学什么，说不定下一个就是你想要的。</p>
 
@@ -67,10 +70,10 @@ export default function FindSkills() {
         />
       </div>
 
-      {/* categories */}
-      <div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto pb-1">
+      {/* categories —— 内部 py/px 留出动效余量，外部负 margin 抵消；否则 overflow-x-auto 会把 hover 上浮/pop 动画裁掉 */}
+      <div className="no-scrollbar -mx-1 -my-2 mt-6 flex gap-2 overflow-x-auto px-1 py-2">
         <button
-          className={`chip shrink-0 ${cat === '全部' ? 'chip-active' : ''}`}
+          className={`chip chip-filter shrink-0 ${cat === '全部' ? 'chip-active chip-pop' : ''}`}
           onClick={() => setCat('全部')}
         >
           全部
@@ -81,7 +84,7 @@ export default function FindSkills() {
           return (
             <button
               key={c}
-              className="chip shrink-0"
+              className={`chip chip-filter shrink-0 ${active ? 'chip-pop' : ''}`}
               style={
                 active
                   ? { borderColor: cc, background: cc + '14', color: cc }

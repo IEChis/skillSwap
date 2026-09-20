@@ -156,6 +156,7 @@ h3 {
     border-color: var(--border-strong);
   }
   .btn-outline:hover {
+    background: transparent;
     border-color: var(--primary);
     color: var(--primary);
   }
@@ -166,7 +167,6 @@ h3 {
     color: var(--text-3);
   }
   .btn-ghost:hover {
-    background: rgba(33, 28, 22, 0.05);
     color: var(--text-2);
   }
   .btn-ghost:active {
@@ -320,6 +320,52 @@ h3 {
     border-color: var(--primary);
     background: #f1edfd;
     color: var(--primary);
+  }
+
+  /* ---- 找技能页筛选胶囊：更轻盈的切换交互 ---- */
+  .chip-filter {
+    background: #fffdf9;
+    transition:
+      transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.22s ease,
+      border-color 0.22s ease,
+      background 0.22s ease,
+      color 0.22s ease;
+    will-change: transform;
+  }
+  .chip-filter:hover {
+    transform: translateY(-2px) rotate(-1.2deg);
+    border-color: var(--border-strong);
+    box-shadow: 0 8px 16px -10px rgba(33, 28, 22, 0.22);
+  }
+  .chip-filter:nth-child(even):hover {
+    transform: translateY(-2px) rotate(1.2deg);
+  }
+  .chip-filter:active {
+    transform: translateY(0) scale(0.93);
+    box-shadow: none;
+  }
+  /* 选中瞬间：弹性 pop 一小下，随active配色自然过渡 */
+  .chip-pop {
+    animation: chip-pop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes chip-pop {
+    0% {
+      transform: scale(0.88);
+    }
+    55% {
+      transform: scale(1.08) rotate(-1.5deg);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chip-filter,
+    .chip-pop {
+      transition: none;
+      animation: none;
+    }
   }
 
   /* ---- 语义化交换药丸 ---- */
@@ -496,13 +542,13 @@ h3 {
       box-shadow 0.28s ease,
       border-color 0.28s ease;
   }
-  /* hover：与匹配卡/找技能卡一致的上浮 + 阴影 + 浅紫描边（带回弹） */
+  /* hover：与匹配卡/找技能卡一致的上浮 + 语义色光晕（默认紫；橙卡经 --swap-glow-* 覆盖） */
   .swap-card:hover {
     transform: translateY(-5px) rotate(0deg) !important;
-    border-color: #c9bcf8 !important;
+    border-color: var(--swap-glow-border, #c9bcf8) !important;
     box-shadow:
-      0 18px 40px -18px rgba(106, 79, 224, 0.35),
-      0 0 0 4px rgba(106, 79, 224, 0.07);
+      0 18px 40px -18px var(--swap-glow, rgba(106, 79, 224, 0.35)),
+      0 0 0 4px var(--swap-glow-soft, rgba(106, 79, 224, 0.07));
   }
 
   /* ---- 交换药丸对：hover 时两端靠近、交换符号点亮 ---- */

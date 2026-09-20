@@ -3,11 +3,12 @@ import { useApp } from '../store';
 import MatchCard from '../components/MatchCard';
 import EmptyState from '../components/EmptyState';
 import { SwapIcon } from '../components/Icons';
+import { FaceDoodle } from '../components/Doodles';
 
 const LINES = [
   '你会的，可能正是别人想学的。',
   '说不定，你想学的就在某个人手里。',
-  '有人正在找你会的东西。',
+  '有人正想学你会的技能。',
   '这个组合，好像可以交换一下。',
 ];
 
@@ -20,7 +21,15 @@ export default function MyMatches() {
 
   return (
     <div className="animate-fade mx-auto max-w-5xl px-6 py-8 sm:py-10">
-      <h1 className="text-2xl font-bold text-[#211c16]">刚好可以交换</h1>
+      <div className="relative w-fit">
+        <h1 className="text-2xl font-bold text-[#211c16]">
+          刚好可以
+          <span className="relative inline-block">
+            交换
+            <FaceDoodle className="absolute -right-11 -top-4 w-10 rotate-6 text-[#f2a24b]" />
+          </span>
+        </h1>
+      </div>
 
       {matches.length > 0 ? (
         <>
