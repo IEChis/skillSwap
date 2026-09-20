@@ -1,0 +1,51 @@
+# ------------------------------------------------------------
+# SkillSwap · Vite + React + TS 项目忽略清单
+# 目标：只把「源码 + 配置」推到 GitHub，让 Vercel 重新安装依赖并构建
+# ------------------------------------------------------------
+
+# 1) 依赖（本机 82MB，Vercel 会根据 package-lock.json 自动 npm install）
+node_modules/
+.pnp
+.pnp.js
+
+# 2) 构建产物（Vercel 每次部署会重新 vite build，不需要提交）
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+tsconfig.node.tsbuildinfo
+
+# 3) 本地日志 / 调试产物（本项目根目录的 build*.log、tsc_*.log、dev.log 等）
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dev.log
+dev.err
+
+# 4) 环境变量与密钥（即使当前没有，也先防住）
+.env
+.env.*
+!.env.example
+
+# 5) Vercel 部署缓存
+.vercel
+.vercelignore
+
+# 6) 编辑器 / 系统
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 7) 测试与覆盖率（当前项目未使用，预留）
+coverage/
+*.lcov

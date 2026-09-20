@@ -1,0 +1,659 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   SkillSwap — 新设计语言
+   暖白 / 米白底 · 深色文字 · 紫(教) + 珊瑚橙(学) 双语义色
+   柔和圆角 · 微妙阴影 · 留白 · 轻量动效
+   ============================================================ */
+:root {
+  color-scheme: light;
+
+  --bg: #faf8f3;            /* 暖米白 */
+  --surface: #ffffff;
+  --surface-soft: #fbf7f0; /* 浅暖卡片底 */
+  --border: #ece6dc;        /* 暖边框 */
+  --border-strong: #e1d8c9;
+  --text: #211c16;          /* 暖近黑 */
+  --text-2: #5c5446;       /* 次级文字 */
+  --text-3: #9a9082;       /* 三级/弱化文字 */
+  --primary: #6a4fe0;       /* 教 / 紫 */
+  --primary-ink: #5739c4;
+  --accent: #f2734e;        /* 学 / 珊瑚橙 */
+  --accent-ink: #bc4424;
+  --success: #18b884;
+
+  --shadow-soft: 0 10px 30px -14px rgba(106, 79, 224, 0.20);
+  --shadow-card: 0 1px 2px rgba(60, 50, 30, 0.04), 0 12px 32px -22px rgba(60, 50, 30, 0.18);
+  --shadow-hover: 0 16px 40px -18px rgba(60, 50, 30, 0.22);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: Inter, system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 更松弛的标题节奏（不再紧绷 tracking-tight） */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   统一组件原语
+   ============================================================ */
+@layer components {
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.85rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+  .btn-primary:hover {
+    background: #5a3fce;
+    box-shadow: var(--shadow-hover);
+  }
+  .btn-primary:active {
+    transform: scale(0.97);
+  }
+  /* ---- 灵动按钮：胶囊 + 微倾 + 弥散投影 + hover 回正上浮 + 箭头滑动 ---- */
+  .btn-playful {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: 9999px;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 700;
+    transform: rotate(-1deg);
+    box-shadow: 0 10px 22px -10px rgba(106, 79, 224, 0.65);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+  }
+  .btn-playful:hover {
+    transform: translateY(-2px) rotate(0deg);
+    background: #5a3fd0;
+    box-shadow: 0 14px 28px -10px rgba(106, 79, 224, 0.7);
+  }
+  .btn-playful:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 6px 14px -8px rgba(106, 79, 224, 0.6);
+  }
+  .btn-playful .btn-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+  .btn-playful:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+  /* 灵动按钮的浅色版：次要动作用的轻胶囊 */
+  .btn-soft {
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    color: #5c5446;
+    font-weight: 600;
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .btn-soft:hover {
+    transform: translateY(-1px) rotate(-0.5deg);
+    border-color: #c9bcf8;
+    background: #f6f3fe;
+    color: #6a4fe0;
+  }
+  .btn-soft:active {
+    transform: translateY(0) scale(0.98);
+  }
+  .btn-accent {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-accent:hover {
+    background: #e15a36;
+  }
+  .btn-accent:active {
+    transform: scale(0.97);
+  }
+  .btn-outline {
+    background: #fff;
+    color: var(--text-2);
+    border-color: var(--border-strong);
+  }
+  .btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .btn-outline:active {
+    transform: scale(0.97);
+  }
+  .btn-ghost {
+    color: var(--text-3);
+  }
+  .btn-ghost:hover {
+    background: rgba(33, 28, 22, 0.05);
+    color: var(--text-2);
+  }
+  .btn-ghost:active {
+    transform: scale(0.97);
+  }
+  .btn-danger {
+    background: #e23b3b;
+    color: #fff;
+  }
+  .btn-danger:hover {
+    background: #c92f2f;
+  }
+
+  /* ---- Card / Surface ---- */
+  .card {
+    border-radius: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+  }
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-strong);
+  }
+
+  /* ---- 匹配卡：hover 灵动选中态（不只是阴影） ---- */
+  .match-card {
+    transition:
+      transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.28s ease,
+      border-color 0.28s ease;
+  }
+  .match-card:hover {
+    transform: translateY(-5px) rotate(-0.6deg);
+    border-color: #c9bcf8;
+    box-shadow:
+      0 18px 40px -18px rgba(106, 79, 224, 0.35),
+      0 0 0 4px rgba(106, 79, 224, 0.07);
+  }
+  /* 中间交换符号：hover 转半圈并放大一点（带回弹） */
+  .match-swap {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .match-card:hover .match-swap {
+    transform: rotate(180deg) scale(1.25);
+  }
+  /* 右上角小星星：默认藏起来，hover 弹出 */
+  .match-card .match-star {
+    opacity: 0;
+    transform: scale(0.3) rotate(-40deg);
+    transition:
+      opacity 0.25s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .match-card:hover .match-star {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  /* 小星星稍晚一点弹出，形成错落节奏 */
+  .match-card .match-star-sm {
+    transition-delay: 0.06s;
+  }
+  /* 按钮右上角星星：与匹配卡星星同参数的弹出/旋转退场 */
+  .btn-star {
+    opacity: 0;
+    transform: scale(0.3) rotate(-40deg);
+    transition:
+      opacity 0.25s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .group:hover .btn-star {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  .surface {
+    border-radius: 1rem;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+  }
+
+  /* ---- Form ---- */
+  .input {
+    width: 100%;
+    border-radius: 0.85rem;
+    border: 1px solid var(--border-strong);
+    background: #fff;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .input::placeholder {
+    color: #b3a99a;
+  }
+  .input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(106, 79, 224, 0.12);
+  }
+  .label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-3);
+  }
+
+  /* ---- Tags / Badges / Chips ---- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-2);
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 9999px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-2);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+  }
+  .chip:hover {
+    border-color: var(--border-strong);
+  }
+  .chip-active {
+    border-color: var(--primary);
+    background: #f1edfd;
+    color: var(--primary);
+  }
+
+  /* ---- 语义化交换药丸 ---- */
+  .ex-teach {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.6rem;
+    border: 1px solid #d9d0fb;
+    background: #f1edfd;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary-ink);
+  }
+  .ex-learn {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.6rem;
+    border: 1px solid #fbd3c5;
+    background: #fdebe3;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent-ink);
+  }
+  .ex-self {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 0.6rem;
+    background: #f1ece3;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-2);
+  }
+
+  /* ---- 小标签（教/学 语义圆点） ---- */
+  .dot-teach {
+    background: var(--primary);
+  }
+  .dot-learn {
+    background: var(--accent);
+  }
+
+  /* ---- Section 标题 ---- */
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .section-sub {
+    margin-top: 0.3rem;
+    font-size: 0.875rem;
+    color: var(--text-3);
+  }
+  .divider {
+    height: 1px;
+    width: 100%;
+    background: var(--border);
+  }
+
+  /* ---- 品牌小标 ---- */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: #f1edfd;
+    border: 1px solid #e2dafb;
+    padding: 0.3rem 0.8rem;
+    border-radius: 9999px;
+  }
+  .kicker-warm {
+    color: var(--accent-ink);
+    background: #fdebe3;
+    border-color: #fbd3c5;
+  }
+
+  /* ---- 去卡片化：更轻的区块与行 ---- */
+  .band {
+    border-radius: 1rem;
+    background: var(--surface-soft);
+  }
+  /* 轻量小标：替代 kicker 胶囊，不再每个区块都套说明卡片 */
+  .eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--text-3);
+  }
+  /* 文字型 CTA：用于次级动作，与 .btn-primary 形成层级 */
+  .link-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--primary);
+    cursor: pointer;
+    transition: gap 0.15s ease, color 0.15s ease;
+  }
+  .link-cta:hover {
+    gap: 0.5rem;
+    color: var(--primary-ink);
+  }
+  .link-cta-soft {
+    color: var(--text-3);
+  }
+  .link-cta-soft:hover {
+    color: var(--text-2);
+  }
+  /* 关系行：无卡片，仅发丝分隔，让交换关系自己说话 */
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .row:last-child {
+    border-bottom: none;
+  }
+  /* 首页入口的交换方程式：单一聚焦容器，而非卡片网格 */
+  .swap-eq {
+    border-radius: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* ---- Typography 层级：Display / Heading / Body / Caption ---- */
+  .display {
+    font-size: clamp(2.1rem, 4.6vw, 3rem);
+    font-weight: 800;
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .heading {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .caption {
+    font-size: 0.75rem;
+    color: var(--text-3);
+  }
+
+  /* ---- 视觉呼吸区：非常浅的氛围底色 ---- */
+  .tint-purple {
+    background: #fffdf9;
+    border: 1.5px solid #cfc2f5;
+  }
+  .tint-orange {
+    background: #fffdf9;
+    border: 1.5px solid #f6c3ac;
+  }
+  .tint-cream {
+    background: #fbf7f0;
+  }
+
+  /* ---- Hero 交换卡：轻微倾斜、细边、轻阴影 ---- */
+  .swap-card {
+    border-radius: 1.1rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+    transition:
+      transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.28s ease,
+      border-color 0.28s ease;
+  }
+  /* hover：与匹配卡/找技能卡一致的上浮 + 阴影 + 浅紫描边（带回弹） */
+  .swap-card:hover {
+    transform: translateY(-5px) rotate(0deg) !important;
+    border-color: #c9bcf8 !important;
+    box-shadow:
+      0 18px 40px -18px rgba(106, 79, 224, 0.35),
+      0 0 0 4px rgba(106, 79, 224, 0.07);
+  }
+
+  /* ---- 交换药丸对：hover 时两端靠近、交换符号点亮 ---- */
+  .pair-x .pair-side {
+    transition: transform 0.2s ease;
+  }
+  .pair-x .pair-swap {
+    opacity: 0.55;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .pair-x:hover .pair-side:first-child {
+    transform: translateX(2px);
+  }
+  .pair-x:hover .pair-side:last-child {
+    transform: translateX(-2px);
+  }
+  .pair-x:hover .pair-swap {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  /* 上行箭头（静态正向）：hover 时翻转到镜像方向，与下行（静态镜像）的翻转对称 */
+  .pair-x:hover .pair-swap-flip {
+    opacity: 1;
+    transform: scaleX(-1) scale(1.15);
+  }
+
+  /* ---- 技能卡：hover 上移 + 箭头浮现 ---- */
+  .arrow-reveal .arrow {
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .arrow-reveal:hover .arrow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   轻量动效（克制）
+   ============================================================ */
+@keyframes fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-fade { animation: fade 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes pop {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-pop { animation: pop 0.24s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-rise {
+  /* backwards 而非 both：动画结束后不再占用 transform，
+     否则会一直覆盖 .match-card:hover 的上移+倾斜 */
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--d, 0s);
+}
+
+/* 技能标签的轻微漂浮 */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.floaty { animation: floaty 5s ease-in-out infinite; }
+
+/* 双向交换符号的上下浮动 */
+@keyframes swapfloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.animate-swap { animation: swapfloat 2.6s ease-in-out infinite; }
+
+/* 交换符号的轻微上下漂浮（Hero 用，更慢） */
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+.bob { animation: bob 4.2s ease-in-out infinite; }
+
+/* 星星装饰的闪烁 */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.88) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.1) rotate(14deg); }
+}
+.twinkle {
+  animation: twinkle 3.4s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+/* 交换关系出现的连接线（沿路径画出） */
+@keyframes draw {
+  from { stroke-dashoffset: var(--len, 200); }
+  to { stroke-dashoffset: 0; }
+}
+.animate-draw {
+  stroke-dasharray: var(--len, 200);
+  animation: draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 20px; height: 20px;
+  border: 2.5px solid rgba(106, 79, 224, 0.22);
+  border-top-color: #6a4fe0;
+  border-radius: 9999px;
+  animation: spin 0.7s linear infinite;
+}
+.spinner-lg { width: 40px; height: 40px; border-width: 3px; }
+
+@keyframes check {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.animate-check { animation: check 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@keyframes pulsering {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  70% { transform: scale(1.25); opacity: 0; }
+  100% { opacity: 0; }
+}
+.animate-pulsering { animation: pulsering 1.6s ease-out infinite; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, #ece6dc 25%, #f4efe6 37%, #ece6dc 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* 匹配度环形（弱化使用） */
+.match-ring {
+  background: conic-gradient(var(--ring, #6a4fe0) calc(var(--p, 0) * 1%), #ece6dc 0);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
