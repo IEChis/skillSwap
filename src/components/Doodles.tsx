@@ -236,40 +236,41 @@ export function FaceDoodle({ className, style }: D) {
 }
 
 /**
- * 手绘放大镜（随手涂鸦风）：镜圈是宽窄不匀的歪椭圆、不闭合，
- * 叠一道更淡的回描让圆看起来是「描了两下画出来的」，
- * 镜内两道歪斜的高光短笔，手柄微弯、收笔甩出，整体明显歪头。
+ * 手绘放大镜（随手涂鸦风）：起笔回钩、镜圈宽窄不匀且明显歪头，
+ * 左上叠一道更淡的回描像「描了两下画出来的」，
+ * 镜内两道不等长的快速斜撩高光，手柄带 S 形微弯、收笔甩出。
  */
 export function MagnifierDoodle({ className, style }: D) {
   return (
     <svg viewBox="0 0 38 38" className={className} style={style} fill="none" overflow="visible" aria-hidden>
-      {/* 镜圈：一圈歪椭圆，上窄下宽、左轻右重，起点终点错开留缺口 */}
+      {/* 镜圈：起笔先甩出一个小回钩再绕圈，一圈宽窄不匀、首尾留大缺口不闭合 */}
       <path
-        d="M15.2 3.8c-6.2-1-11.4 3.2-11.9 9-.5 6.2 4.4 10.6 10.4 10.4 5.8-.2 10.3-4.1 10-9.6-.1-2.8-1.3-5.3-3.3-7"
+        d="M17.3 3.5c-1.1-1-2.9-1.2-4.7-.7C7.6 4 3.8 8 3.3 12.7c-.5 4.8 2.6 9.1 7.1 10.5 4.6 1.5 9.7-.3 12.5-4.1 2.7-3.7 2.6-8.8-.1-12.2-1.4-1.4-1.2-1.3-1.5-1.4"
         stroke="currentColor"
         strokeWidth="2.3"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      {/* 回描：只在右下段补了半笔，更淡更细，像描圆时手抖又描了一下 */}
+      {/* 回描：左上段补半笔，更淡更细，像描圆时手抖又描了一下 */}
       <path
-        d="M23.4 9.4c.8 1.6 1.1 3.3.9 5.2"
+        d="M7.6 6.2c1.8-1.8 4.2-2.9 6.8-3.1"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1.4"
         strokeLinecap="round"
-        opacity="0.55"
+        opacity="0.5"
       />
-      {/* 镜内高光：两道平行的斜向短笔（玻璃反光），方向一致、一长一短 */}
+      {/* 镜内高光：一道长斜撩（玻璃反光，逆时针转 50°） */}
       <path
-        d="M8.9 13.9c.3-1.9 1.3-3.6 2.8-4.8"
+        d="M8.2 15.1c-.5-2.2.3-4.6 2-6.2"
         stroke="currentColor"
         strokeWidth="1.7"
         strokeLinecap="round"
         opacity="0.55"
+        transform="rotate(-50 13.3 13.2)"
       />
-      <path d="M13.7 10.8c.3-1 .8-1.9 1.5-2.7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.45" />
-      {/* 手柄：带一点弯的斜笔，接在镜圈外，收笔甩出 */}
+      {/* 手柄：带一点 S 形微弯的斜笔，比镜圈拖得更长，收笔自然停住不甩尾 */}
       <path
-        d="M21.8 21.2c2.8 2.6 5.4 5.3 8.2 8.2.5.5 1 .6 1.5.1"
+        d="M22.4 21.6c1.7 1.4 3.3 3 4.8 4.8 1.8 2.1 3.7 4.3 6 6.1"
         stroke="currentColor"
         strokeWidth="2.6"
         strokeLinecap="round"

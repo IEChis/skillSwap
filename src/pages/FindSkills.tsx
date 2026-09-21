@@ -47,7 +47,7 @@ export default function FindSkills() {
     <div className="animate-fade mx-auto max-w-6xl px-6 py-8 sm:py-10">
       {/* 标题：带一点手绘感点缀 */}
       <h1 className="text-2xl font-bold w-fit text-[#211c16]">
-        找到你想学的
+        找你想学的
         <span className="relative inline-block">
           技能
           <MagnifierDoodle className="absolute -right-[52px] -top-5 w-12 -rotate-10 text-[#a394ec]" />

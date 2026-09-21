@@ -35,6 +35,11 @@ body,
   height: 100%;
 }
 
+/* 内容长短切换（如筛选标签）时滚动条出现/消失会引起整体左右抖动，始终预留滚动条槽位 */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: Inter, system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background: var(--bg);
@@ -162,6 +167,42 @@ h3 {
   }
   .btn-outline:active {
     transform: scale(0.97);
+  }
+  /* ---- 交换邀请 CTA：轻胶囊（他人主页「试着和 TA 交换一下」）—— hover 微倾上浮 + 箭头滑动 ---- */
+  .btn-swap-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 9999px;
+    border: 1px solid #ddd3f8;
+    background: #f6f3fe;
+    color: #5739c4;
+    padding: 0.55rem 1.4rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    transition:
+      transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.22s ease,
+      border-color 0.22s ease,
+      background 0.22s ease;
+    will-change: transform;
+  }
+  .btn-swap-cta:hover {
+    transform: translateY(-2px) rotate(-1.2deg);
+    border-color: #c9bcf8;
+    background: #fff;
+    box-shadow: 0 12px 24px -14px rgba(106, 79, 224, 0.45);
+  }
+  .btn-swap-cta:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: none;
+  }
+  .btn-swap-cta .btn-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+  .btn-swap-cta:hover .btn-arrow {
+    transform: translateX(3px);
   }
   .btn-ghost {
     color: var(--text-3);

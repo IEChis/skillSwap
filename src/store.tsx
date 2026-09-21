@@ -83,7 +83,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [exchanges, setExchanges] = useState<Exchange[]>(() => loadExchanges());
   const [view, setView] = useState<string>(() => (loadMe() ? 'home' : 'onboarding'));
   const [params, setParams] = useState<any>({});
-  const [history, setHistory] = useState<string[]>([]);
+  const [history, setHistory] = useState<{ view: string; params: any }[]>([]);
   const [toastState, setToastState] = useState<{ msg: string; type: ToastType } | null>(null);
   const [addSkillModal, setAddSkillModal] = useState<{
     open: boolean;
@@ -102,7 +102,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   // ---- navigation ----
   const navigate = useCallback((next: string, p?: any) => {
-    setHistory((h) => [...h, next]);
+    setHistory((h) => [...h, { view: next, params: p ?? {} }]);
     setView(next);
     setParams(p ?? {});
     window.scrollTo({ top: 0 });
@@ -114,9 +114,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setParams({});
         return [];
       }
+      // 返回上一页时连同 params（如 userId）一起恢复，避免目标页丢参数
       const prev = h[h.length - 2];
-      setView(prev);
-      setParams({});
+      setView(prev.view);
+      setParams(prev.params ?? {});
       return h.slice(0, -1);
     });
     window.scrollTo({ top: 0 });

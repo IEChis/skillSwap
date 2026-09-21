@@ -48,7 +48,7 @@ export default function UserDetail() {
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="card p-5">
           <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-brand-600">
-            <span className="h-2 w-2 rounded-full bg-brand-500" /> 我能教
+            <span className="h-2 w-2 rounded-full bg-brand-500" /> TA能教
           </h2>
           <div className="flex flex-wrap gap-1.5">
             {user.canTeach.map((s) => (
@@ -58,7 +58,7 @@ export default function UserDetail() {
         </div>
         <div className="card p-5">
           <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold text-accent-600">
-            <span className="h-2 w-2 rounded-full bg-accent-500" /> 我想学
+            <span className="h-2 w-2 rounded-full bg-accent-500" /> TA想学
           </h2>
           <div className="flex flex-wrap gap-1.5">
             {user.wantToLearn.map((s) => (
@@ -108,9 +108,11 @@ export default function UserDetail() {
                 ))}
               </div>
             )}
-            <button className="btn-primary mt-1 w-full" onClick={() => navigate('exchangeOffer', { userId: user.id })}>
-              试着和 TA 交换一下 →
-            </button>
+            <div className="mt-1 flex justify-center">
+              <button className="btn-swap-cta" onClick={() => navigate('exchangeOffer', { userId: user.id })}>
+                试着和 TA 交换一下 <span className="btn-arrow">→</span>
+              </button>
+            </div>
           </div>
         )}
       </div>

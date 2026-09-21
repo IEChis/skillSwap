@@ -140,8 +140,8 @@ export default function ExchangeOffer() {
             <p className="mb-4 text-sm text-[#5c5446]">
               根据你们真实的交换关系，帮你写一段自然的邀请，你可以改一改再发。
             </p>
-            <button className="btn-primary" onClick={runAI}>
-              帮我写邀请
+            <button className="btn-swap-cta" onClick={runAI}>
+              帮我写邀请 <span className="btn-arrow">✦</span>
             </button>
           </div>
         )}
@@ -209,11 +209,11 @@ export default function ExchangeOffer() {
         </div>
       </div>
 
-      <div className="mt-5 flex gap-3">
-        <button className="btn-primary flex-1 py-3" onClick={send}>
-          发个交换邀请 →
+      <div className="mt-5 flex items-center justify-center gap-4">
+        <button className="btn-playful px-8 py-3 text-sm" onClick={send}>
+          发个交换邀请 <span className="btn-arrow">→</span>
         </button>
-        <button className="btn-ghost px-5 py-3 text-sm" onClick={back}>
+        <button className="btn-ghost px-3 py-3 text-sm" onClick={back}>
           再想想
         </button>
       </div>
