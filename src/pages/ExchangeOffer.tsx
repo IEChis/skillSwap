@@ -11,7 +11,7 @@ import type { Method } from '../types';
 const METHODS: Method[] = ['线上', '线下', '都可以'];
 
 export default function ExchangeOffer() {
-  const { me, users, params, navigate, back, createExchange } = useApp();
+  const { me, users, params, navigate, back, createExchange, pendingPlans } = useApp();
   const userId = params.userId as string;
   const other = users.find((u) => u.id === userId);
 
@@ -30,7 +30,7 @@ export default function ExchangeOffer() {
 
   if (!me || !other || !m) {
     return (
-      <div className="mx-auto max-w-2xl px-6 py-16 text-center text-[#9a9082]">
+      <div className="mx-auto max-w-2xl px-6 py-16 text-center text-[#737373]">
         信息缺失。
         <button className="btn-outline ml-3" onClick={() => navigate('matches')}>
           返回
@@ -70,6 +70,7 @@ export default function ExchangeOffer() {
       method,
       weekly,
       message: message.trim() || autoMessage,
+      plan: pendingPlans[other.id],
     });
     setSent(true);
     setTimeout(() => navigate('exchanges'), 1500);
@@ -78,19 +79,19 @@ export default function ExchangeOffer() {
   if (sent) {
     return (
       <div className="animate-fade relative mx-auto flex max-w-md flex-col items-center px-6 py-24 text-center">
-        <StarDoodle className="twinkle absolute right-10 top-20 text-[#f2734e]" aria-hidden />
+        <StarDoodle className="twinkle absolute right-10 top-20 text-[#FF8A4C]" aria-hidden />
         <StarDoodle
-          className="twinkle absolute bottom-24 left-10 !h-3.5 !w-3.5 text-[#b9aaf7]"
+          className="twinkle absolute bottom-24 left-10 !h-3.5 !w-3.5 text-[#C4B6FB]"
           style={{ ['--d' as string]: '1s' } as React.CSSProperties}
           aria-hidden
         />
         <div className="animate-check flex h-20 w-20 items-center justify-center rounded-full bg-[#edfbf4] text-[#18b884]">
           <CheckCircleIcon width={44} height={44} />
         </div>
-        <h1 className="mt-6 flex items-center gap-2 text-2xl font-extrabold text-[#211c16]">
-          交换邀请已发出 <StarDoodle className="!h-4 !w-4 text-[#f2734e]" />
+        <h1 className="mt-6 flex items-center gap-2 text-2xl font-extrabold text-[#18181B]">
+          交换邀请已发出 <StarDoodle className="!h-4 !w-4 text-[#FF8A4C]" />
         </h1>
-        <p className="mt-2 text-sm text-[#5c5446]">
+        <p className="mt-2 text-sm text-[#525252]">
           已经送到 {other.name} 手上啦。等 TA 回个话，你们就能开始「{iTeach} × {iLearn}」的交换了。
         </p>
       </div>
@@ -101,14 +102,14 @@ export default function ExchangeOffer() {
     <div className="animate-fade mx-auto max-w-2xl px-6 py-8">
       <button
         onClick={back}
-        className="mb-4 inline-flex items-center gap-1 text-sm text-[#5c5446] transition hover:text-[#6a4fe0]"
+        className="mb-4 inline-flex items-center gap-1 text-sm text-[#525252] transition hover:text-[#7C5CFC]"
       >
         <ArrowLeftIcon width={16} height={16} /> 返回
       </button>
 
       <h1 className="heading relative w-fit">
         向 {other.name} 发起技能交换
-        <CurlyUnderline className="absolute -bottom-2 left-0 h-2 w-full text-[#fec9b7]" />
+        <CurlyUnderline className="absolute -bottom-2 left-0 h-2 w-full text-[#FFD6C0]" />
       </h1>
 
       {/* 确认式摘要：我可以教 ↔ 我想学习（统一 ExchangeCard） */}
@@ -124,12 +125,12 @@ export default function ExchangeOffer() {
       </div>
 
       {/* 轻量确认项 */}
-      <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 rounded-2xl bg-[#fbf7f0] px-4 py-3 text-sm text-[#5c5446]">
+      <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 rounded-2xl bg-[#F7F7F7] px-4 py-3 text-sm text-[#525252]">
         <span>
-          交换方式：<span className="font-semibold text-[#211c16]">{method}</span>
+          交换方式：<span className="font-semibold text-[#18181B]">{method}</span>
         </span>
         <span>
-          每周：<span className="font-semibold text-[#211c16]">{weekly}</span>
+          每周：<span className="font-semibold text-[#18181B]">{weekly}</span>
         </span>
       </div>
 
@@ -137,7 +138,7 @@ export default function ExchangeOffer() {
       <AiPanel title="帮你写个邀请">
         {!aiBusy && !aiDone && (
           <div className="text-center">
-            <p className="mb-4 text-sm text-[#5c5446]">
+            <p className="mb-4 text-sm text-[#525252]">
               根据你们真实的交换关系，帮你写一段自然的邀请，你可以改一改再发。
             </p>
             <button className="btn-swap-cta" onClick={runAI}>
@@ -147,7 +148,7 @@ export default function ExchangeOffer() {
         )}
 
         {aiBusy && (
-          <div className="flex items-center justify-center gap-3 py-4 text-sm text-[#5c5446]">
+          <div className="flex items-center justify-center gap-3 py-4 text-sm text-[#525252]">
             <span className="spinner" />
             正在想怎么开口…
           </div>
@@ -155,7 +156,7 @@ export default function ExchangeOffer() {
 
         {!aiBusy && aiDone && (
           <div className="animate-rise">
-            <div className="rounded-xl border border-[#ece6dc] bg-[#fbf7f0] p-3.5 text-sm leading-relaxed text-[#211c16]">
+            <div className="rounded-xl border border-[#EAEAEA] bg-[#F7F7F7] p-3.5 text-sm leading-relaxed text-[#18181B]">
               {message}
             </div>
             <div className="mt-3 flex gap-2">
@@ -174,7 +175,7 @@ export default function ExchangeOffer() {
         )}
       </AiPanel>
 
-      <div className="mt-4 space-y-4 rounded-2xl border border-[#ece6dc] bg-white p-5">
+      <div className="mt-4 space-y-4 rounded-2xl border border-[#EAEAEA] bg-white p-5">
         <div>
           <label className="label">交换方式</label>
           <div className="flex gap-2">
@@ -203,7 +204,7 @@ export default function ExchangeOffer() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <p className="mt-1 text-xs text-[#9a9082]">
+          <p className="mt-1 text-xs text-[#737373]">
             {aiDone ? '已经帮你写好文案了，直接改也行。' : '留空就用上面那段默认留言。'}
           </p>
         </div>

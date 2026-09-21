@@ -32,10 +32,10 @@ export function SkillChip({
   tint?: string;
 }) {
   const styles: Record<typeof variant, string> = {
-    teach: 'bg-[#f1edfd] text-[#5739c4] border-[#d9d0fb]',
-    learn: 'bg-[#fdebe3] text-[#bc4424] border-[#fbd3c5]',
-    neutral: 'bg-[#f1ece3] text-[#5c5446] border-[#ece6dc]',
-    matched: 'bg-[#fbf7f0] text-[#211c16] border-[#e7ddf5]',
+    teach: 'bg-[#F5F3FF] text-[#6D44F2] border-[#DED7FE]',
+    learn: 'bg-[#FFF3EC] text-[#E2702F] border-[#FFD6C0]',
+    neutral: 'bg-[#F4F4F5] text-[#525252] border-[#EAEAEA]',
+    matched: 'bg-[#F7F7F7] text-[#18181B] border-[#e7ddf5]',
   };
   const tintStyle = tint
     ? { background: tint + '14', color: tint, borderColor: tint + '33' }
@@ -52,8 +52,8 @@ export function SkillChip({
     >
       {variant === 'matched' && (
         <span className="inline-flex">
-          <span className="h-2 w-2 rounded-full bg-[#6a4fe0]" />
-          <span className="-ml-1 h-2 w-2 rounded-full bg-[#f2734e]" />
+          <span className="h-2 w-2 rounded-full bg-[#7C5CFC]" />
+          <span className="-ml-1 h-2 w-2 rounded-full bg-[#FF8A4C]" />
         </span>
       )}
       {children}
@@ -80,11 +80,11 @@ export function ConnectionLine({
     return (
       <svg viewBox="0 0 64 38" className={className} fill="none" aria-hidden>
         {/* 紫：上方一道弧，左 → 右（我教你） */}
-        <path d="M5 14C18 4 46 4 58 13" stroke="#6a4fe0" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M51 6l8 6.5-10 3" stroke="#6a4fe0" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M5 14C18 4 46 4 58 13" stroke="#7C5CFC" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M51 6l8 6.5-10 3" stroke="#7C5CFC" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         {/* 橙：下方一道弧，右 → 左（TA 教你） */}
-        <path d="M59 24C46 34 18 34 6 25" stroke="#f2734e" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M13 32l-8-6.5 10-3" stroke="#f2734e" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M59 24C46 34 18 34 6 25" stroke="#FF8A4C" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M13 32l-8-6.5 10-3" stroke="#FF8A4C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   }
@@ -131,16 +131,16 @@ export function ExchangeCard({
 }) {
   const side = (label: string, skill: string, variant: 'teach' | 'learn', rotate: string) => (
     <div
-      className={`flex flex-1 flex-col rounded-2xl border bg-[#fffdf9] p-4 transform-gpu will-change-transform transition-[transform,box-shadow] duration-300 ease-out ${
+      className={`flex flex-1 flex-col rounded-2xl border bg-[#FFFFFF] p-4 transform-gpu will-change-transform transition-[transform,box-shadow] duration-300 ease-out ${
         variant === 'teach'
-          ? 'border-[#d9d0fb] group-hover:-translate-y-1 group-hover:-translate-x-0.5 group-hover:rotate-0 group-hover:shadow-[0_16px_30px_-18px_rgba(106,79,224,0.4)]'
-          : 'border-[#fbd3c5] group-hover:-translate-y-1 group-hover:translate-x-0.5 group-hover:rotate-0 group-hover:shadow-[0_16px_30px_-18px_rgba(242,115,78,0.4)]'
+          ? 'border-[#DED7FE] group-hover:-translate-y-1 group-hover:-translate-x-0.5 group-hover:rotate-0 group-hover:shadow-[0_16px_30px_-18px_rgba(106,79,224,0.4)]'
+          : 'border-[#FFD6C0] group-hover:-translate-y-1 group-hover:translate-x-0.5 group-hover:rotate-0 group-hover:shadow-[0_16px_30px_-18px_rgba(242,115,78,0.4)]'
       } ${tilt ? rotate : ''}`}
     >
-      <span className={`text-xs font-bold ${variant === 'teach' ? 'text-[#5739c4]' : 'text-[#bc4424]'}`}>
+      <span className={`text-xs font-bold ${variant === 'teach' ? 'text-[#6D44F2]' : 'text-[#E2702F]'}`}>
         {label}
       </span>
-      <span className="mt-1.5 truncate text-lg font-extrabold text-[#211c16]">{skill}</span>
+      <span className="mt-1.5 truncate text-lg font-extrabold text-[#18181B]">{skill}</span>
     </div>
   );
 

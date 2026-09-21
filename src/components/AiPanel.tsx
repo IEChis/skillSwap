@@ -16,11 +16,11 @@ export default function AiPanel({
   footer?: ReactNode;
 }) {
   return (
-    <section className="mt-4 overflow-hidden rounded-2xl border border-[#ece6dc] bg-white">
-      <header className="flex items-center gap-2 border-b border-[#f0ebe2] bg-[#fbf7f0] px-5 py-3">
-        <SparkIcon width={16} height={16} className="text-[#6a4fe0]" />
-        <span className="text-sm font-semibold text-[#211c16]">{title}</span>
-        <span className="ml-auto rounded-full bg-[#f1edfd] px-2 py-0.5 text-[10px] font-semibold text-[#5739c4]">
+    <section className="mt-4 overflow-hidden rounded-2xl border border-[#EAEAEA] bg-white">
+      <header className="flex items-center gap-2 border-b border-[#f0ebe2] bg-[#F7F7F7] px-5 py-3">
+        <SparkIcon width={16} height={16} className="text-[#7C5CFC]" />
+        <span className="text-sm font-semibold text-[#18181B]">{title}</span>
+        <span className="ml-auto rounded-full bg-[#F5F3FF] px-2 py-0.5 text-[10px] font-semibold text-[#6D44F2]">
           AI
         </span>
       </header>

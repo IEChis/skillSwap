@@ -61,6 +61,29 @@ export interface MatchResult {
 
 export type ExchangeStatus = 'pending' | 'ongoing' | 'completed';
 
+/** 交换方案：4 周、双方对等，由 AI 生成或双方共建 */
+export interface ExchangePlanWeek {
+  week: number;
+  youTopic: string; // 你教的内容
+  theyTopic: string; // TA 教的内容
+}
+
+export interface ExchangePlan {
+  youTeach: string;
+  theyTeach: string;
+  weeklyHours: string;
+  weeks: ExchangePlanWeek[];
+  reciprocityNote: string;
+}
+
+/** 持久化的方案：记录是否已获双方确认，以及我方提交、待对方确认的修改 */
+export interface StoredPlan extends ExchangePlan {
+  /** 当前方案是否已获双方确认 */
+  confirmed: boolean;
+  /** 我方提交、等待对方确认的修改版；null / undefined 表示没有待确认修改 */
+  pendingEdit?: ExchangePlan | null;
+}
+
 export interface ExchangeMessage {
   from: 'me' | 'them';
   text: string;
@@ -79,6 +102,10 @@ export interface Exchange {
   weekly: string;
   message: string;
   status: ExchangeStatus;
+  /** 邀请方向：out = 我发给对方（等对方确认）；in = 对方发给我（等我确认）。缺省视为 out */
+  direction?: 'out' | 'in';
+  /** 已生成的交换方案（确认 / 编辑均需双方认同） */
+  plan?: StoredPlan;
   createdAt: number;
   messages: ExchangeMessage[];
 }

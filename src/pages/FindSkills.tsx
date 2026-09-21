@@ -63,21 +63,21 @@ export default function FindSkills() {
   return (
     <div className="animate-fade mx-auto max-w-6xl px-6 py-8 sm:py-10">
       {/* 标题：带一点手绘感点缀 */}
-      <h1 className="text-2xl font-bold w-fit text-[#211c16]">
+      <h1 className="text-2xl font-bold w-fit text-[#18181B]">
         找你想学的
         <span className="relative inline-block">
           技能
           <MagnifierDoodle className="absolute -right-[52px] -top-5 w-12 -rotate-10 text-[#a394ec]" />
         </span>
       </h1>
-      <p className="mt-3 text-sm text-[#9a9082]">看看大家都在学什么，说不定下一个就是你想要的。</p>
+      <p className="mt-3 text-sm text-[#737373]">看看大家都在学什么，说不定下一个就是你想要的。</p>
 
       {/* search */}
       <div className="relative mt-6 max-w-xl">
         <SearchIcon
           width={18}
           height={18}
-          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#b3a99a]"
+          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#A1A1AA]"
         />
         <input
           className="input rounded-full py-2.5 pl-11"
@@ -139,21 +139,21 @@ export default function FindSkills() {
                 >
                   {s.name[0]}
                 </span>
-                <ArrowLeftIcon width={17} height={17} className="arrow mt-1 -scale-x-100 text-[#b3a99a]" />
+                <ArrowLeftIcon width={17} height={17} className="arrow mt-1 -scale-x-100 text-[#A1A1AA]" />
               </div>
-              <h3 className="mt-3 font-bold text-[#211c16]">{s.name}</h3>
+              <h3 className="mt-3 font-bold text-[#18181B]">{s.name}</h3>
               <SkillChip variant="neutral" tint={c} className="mt-1.5">
                 {s.category}
               </SkillChip>
-              <p className="mt-2 text-xs text-[#9a9082]">
-                <span className="font-semibold text-[#5c5446]">{s.learn}</span> 人想学 ·{' '}
-                <span className="font-semibold text-[#5c5446]">{s.teach}</span> 人可以教
+              <p className="mt-2 text-xs text-[#737373]">
+                <span className="font-semibold text-[#525252]">{s.learn}</span> 人想学 ·{' '}
+                <span className="font-semibold text-[#525252]">{s.teach}</span> 人可以教
               </p>
             </button>
           );
         })}
         {filtered.length === 0 && (
-          <p className="col-span-full py-10 text-center text-sm text-[#9a9082]">
+          <p className="col-span-full py-10 text-center text-sm text-[#737373]">
             没有找到相关技能，换个词试试？
           </p>
         )}

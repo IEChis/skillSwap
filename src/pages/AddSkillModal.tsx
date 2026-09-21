@@ -107,7 +107,7 @@ export default function AddSkillModal() {
         <button
           key={m}
           type="button"
-          className={`chip ${method === m ? 'chip-active' : 'border-[#ece6dc] text-[#5c5446]'}`}
+          className={`chip ${method === m ? 'chip-active' : 'border-[#EAEAEA] text-[#525252]'}`}
           onClick={() => setMethod(m)}
         >
           {m}

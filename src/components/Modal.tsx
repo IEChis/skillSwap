@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { CloseIcon } from './Icons';
 
 interface Props {
@@ -22,9 +23,10 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
   }, [open, onClose]);
 
   if (!open) return null;
-  return (
+  // 用 portal 渲染到 body，脱离卡片的 transform 包含块（否则 fixed 会相对卡片定位、被卡片内按钮遮住）
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-[#211c16]/40 p-0 backdrop-blur-sm sm:items-center sm:p-4"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-[#18181B]/40 p-0 backdrop-blur-sm sm:items-center sm:p-4"
       onClick={onClose}
     >
       <div
@@ -34,7 +36,7 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
       >
         {title && (
           <div className="flex items-center justify-between border-b border-[#f0ebe2] px-5 py-4">
-            <h3 className="text-base font-semibold text-[#211c16]">{title}</h3>
+            <h3 className="text-base font-semibold text-[#18181B]">{title}</h3>
             <button className="btn-ghost rounded-full p-1.5" onClick={onClose} aria-label="关闭">
               <CloseIcon width={18} height={18} />
             </button>
@@ -42,6 +44,7 @@ export default function Modal({ open, onClose, title, children, maxWidth = 480 }
         )}
         <div className="max-h-[78vh] overflow-y-auto px-5 py-5">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

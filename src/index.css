@@ -10,23 +10,27 @@
 :root {
   color-scheme: light;
 
-  --bg: #faf8f3;            /* 暖米白 */
-  --surface: #ffffff;
-  --surface-soft: #fbf7f0; /* 浅暖卡片底 */
-  --border: #ece6dc;        /* 暖边框 */
-  --border-strong: #e1d8c9;
-  --text: #211c16;          /* 暖近黑 */
-  --text-2: #5c5446;       /* 次级文字 */
-  --text-3: #9a9082;       /* 三级/弱化文字 */
-  --primary: #6a4fe0;       /* 教 / 紫 */
-  --primary-ink: #5739c4;
-  --accent: #f2734e;        /* 学 / 珊瑚橙 */
-  --accent-ink: #bc4424;
+  /* ---- 基础：白色画布 + 中性灰 ---- */
+  --bg: #ffffff;            /* 白色主角 */
+  --surface: #fafafa;       /* 次级背景 */
+  --surface-soft: #f7f7f7;  /* 浅灰背景 */
+  --border: #eaeaea;        /* 极轻边框 */
+  --border-strong: #e2e2e2;
+  --text: #18181b;          /* 黑色文字 */
+  --text-2: #525252;        /* 次级文字 */
+  --text-3: #737373;        /* 三级/弱化文字 */
+
+  /* ---- 品牌双语义色：教=紫 / 学=橙（克制使用） ---- */
+  --primary: #7c5cfc;       /* 教 / 品牌紫 */
+  --primary-ink: #6d44f2;
+  --accent: #ff8a4c;        /* 学 / 品牌橙 */
+  --accent-ink: #e2702f;
   --success: #18b884;
 
-  --shadow-soft: 0 10px 30px -14px rgba(106, 79, 224, 0.20);
-  --shadow-card: 0 1px 2px rgba(60, 50, 30, 0.04), 0 12px 32px -22px rgba(60, 50, 30, 0.18);
-  --shadow-hover: 0 16px 40px -18px rgba(60, 50, 30, 0.22);
+  /* ---- 阴影：中性、极轻，避免彩色投影 ---- */
+  --shadow-soft: 0 10px 30px -14px rgba(24, 24, 27, 0.12);
+  --shadow-card: 0 1px 2px rgba(24, 24, 27, 0.04), 0 12px 32px -22px rgba(24, 24, 27, 0.10);
+  --shadow-hover: 0 16px 40px -18px rgba(24, 24, 27, 0.14);
 }
 
 html,
@@ -117,6 +121,16 @@ h3 {
     transform: translateY(0) scale(0.98);
     box-shadow: 0 6px 14px -8px rgba(106, 79, 224, 0.6);
   }
+  /* 镜像版：与 .btn-playful 同款动效，倾斜方向左右相反（用于行左侧的按钮，如「接受，开始交换」） */
+  .btn-playful-flip {
+    transform: rotate(1deg);
+  }
+  .btn-playful-flip:hover {
+    transform: translateY(-2px) rotate(0deg);
+  }
+  .btn-playful-flip:active {
+    transform: translateY(0) scale(0.98);
+  }
   .btn-playful .btn-arrow {
     display: inline-block;
     transition: transform 0.2s ease;
@@ -172,6 +186,7 @@ h3 {
   .btn-swap-cta {
     display: inline-flex;
     align-items: center;
+    justify-content: center; /* 被 flex-1 拉宽时文字仍居中（与 .btn-playful 一致） */
     gap: 0.4rem;
     border-radius: 9999px;
     border: 1px solid #ddd3f8;
@@ -306,7 +321,7 @@ h3 {
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
   .input::placeholder {
-    color: #b3a99a;
+    color: #a1a1aa;
   }
   .input:focus {
     border-color: var(--primary);
@@ -366,7 +381,7 @@ h3 {
 
   /* ---- 找技能页筛选胶囊：更轻盈的切换交互 ---- */
   .chip-filter {
-    background: #fffdf9;
+    background: #ffffff;
     transition:
       transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
       box-shadow 0.22s ease,
@@ -560,17 +575,19 @@ h3 {
     color: var(--text-3);
   }
 
-  /* ---- 视觉呼吸区：非常浅的氛围底色 ---- */
+  /* ---- 视觉呼吸区：白色画布 + 极轻边框，彩色只出现在小圆点/图标 ---- */
   .tint-purple {
-    background: #fffdf9;
-    border: 1.5px solid #cfc2f5;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
   }
   .tint-orange {
-    background: #fffdf9;
-    border: 1.5px solid #f6c3ac;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
   }
   .tint-cream {
-    background: #fbf7f0;
+    background: #fafafa;
   }
 
   /* ---- Hero 交换卡：轻微倾斜、细边、轻阴影 ---- */

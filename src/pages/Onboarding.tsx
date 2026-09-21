@@ -51,11 +51,11 @@ function PlayfulCta({
 }) {
   return (
     <div className="group relative inline-block">
-      <StarDoodle className="btn-star pointer-events-none absolute -right-4 -top-3 !h-4 !w-4 text-[#f2734e]" />
+      <StarDoodle className="btn-star pointer-events-none absolute -right-4 -top-3 !h-4 !w-4 text-[#FF8A4C]" />
       <button
         onClick={onClick}
         disabled={disabled}
-        className="inline-flex -rotate-1 items-center gap-2 rounded-full bg-[#6a4fe0] px-7 py-3 text-[15px] font-bold text-white shadow-[0_12px_26px_-12px_rgba(106,79,224,0.65)] transition-all duration-200 hover:-rotate-3 hover:bg-[#5a3fd0] hover:shadow-[0_16px_30px_-12px_rgba(106,79,224,0.7)] active:rotate-1 active:shadow-[0_8px_18px_-10px_rgba(106,79,224,0.6)] disabled:pointer-events-none disabled:opacity-50"
+        className="inline-flex -rotate-1 items-center gap-2 rounded-full bg-[#7C5CFC] px-7 py-3 text-[15px] font-bold text-white shadow-[0_12px_26px_-12px_rgba(106,79,224,0.65)] transition-all duration-200 hover:-rotate-3 hover:bg-[#5a3fd0] hover:shadow-[0_16px_30px_-12px_rgba(106,79,224,0.7)] active:rotate-1 active:shadow-[0_8px_18px_-10px_rgba(106,79,224,0.6)] disabled:pointer-events-none disabled:opacity-50"
       >
         {label}
         <span className="inline-block transition-transform duration-200 group-hover:translate-x-1.5">
@@ -105,14 +105,14 @@ export default function Onboarding() {
         leaving ? 'pointer-events-none -translate-y-4 opacity-0' : 'opacity-100'
       }`}
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-[#f3f0fd] via-[#faf6ee]/60 to-transparent" />
-      <StarDoodle className="twinkle pointer-events-none absolute right-[12%] top-16 !h-5 !w-5 text-[#f2734e]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-[#F5F3FF] via-[#FAFAFA]/60 to-transparent" />
+      <StarDoodle className="twinkle pointer-events-none absolute right-[12%] top-16 !h-5 !w-5 text-[#FF8A4C]" />
       <StarDoodle
-        className="twinkle pointer-events-none absolute left-[8%] top-44 !h-3.5 !w-3.5 text-[#b9aaf7]"
+        className="twinkle pointer-events-none absolute left-[8%] top-44 !h-3.5 !w-3.5 text-[#C4B6FB]"
         style={{ ['--d' as string]: '1.3s' } as CSSProperties}
       />
       <ArcDoodle className="pointer-events-none absolute bottom-14 left-[10%] w-16 text-[#d8d0fb]" />
-      <HalfRingDoodle className="pointer-events-none absolute bottom-24 right-[15%] w-6 -scale-x-100 text-[#fec9b7]" />
+      <HalfRingDoodle className="pointer-events-none absolute bottom-24 right-[15%] w-6 -scale-x-100 text-[#FFD6C0]" />
       <div key={key} className="relative mx-auto flex min-h-screen w-full max-w-2xl flex-col px-6 py-10">
         {inner}
       </div>
@@ -129,12 +129,12 @@ export default function Onboarding() {
             className="animate-pulsering absolute inset-0 rounded-full bg-[#e9e5fd]"
             style={{ animationDelay: '0.8s' }}
           />
-          <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#6a4fe0] text-white shadow-soft">
+          <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#7C5CFC] text-white shadow-soft">
             <SwapIcon width={26} height={26} className="animate-swap" />
           </div>
         </div>
-        <p className="text-lg font-medium text-[#211c16]">正在帮你物色刚好互补的人……</p>
-        <p className="mt-2 text-sm text-[#9a9082]">很快就好</p>
+        <p className="text-lg font-medium text-[#18181B]">正在帮你物色刚好互补的人……</p>
+        <p className="mt-2 text-sm text-[#737373]">很快就好</p>
       </div>,
       'loading'
     );
@@ -150,22 +150,22 @@ export default function Onboarding() {
             className="animate-pulsering absolute inset-0 rounded-full bg-[#e9e5fd]"
             style={{ animationDelay: '0.8s' }}
           />
-          <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#c9bcf8] bg-[#f1edfd] text-[#6a4fe0]">
+          <div className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#C4B6FB] bg-[#F5F3FF] text-[#7C5CFC]">
             <CheckIcon width={30} height={30} />
           </div>
         </div>
         <h1 className="display">找到了！</h1>
-        <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[#5c5446]">
-          你和 <span className="font-bold text-[#211c16]">{found}</span>{' '}
+        <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-[#525252]">
+          你和 <span className="font-bold text-[#18181B]">{found}</span>{' '}
           个人刚好可以互相帮忙，先去看看都有谁。
         </p>
 
         {/* 用刚选的技能预览一张交换卡，与首页 Hero 的倾斜双卡自然呼应 */}
         {teach[0] && learn[0] && (
           <div className="relative mt-7 w-full max-w-sm">
-            <StarDoodle className="twinkle absolute -right-2 -top-4 !h-4 !w-4 text-[#f2734e]" />
+            <StarDoodle className="twinkle absolute -right-2 -top-4 !h-4 !w-4 text-[#FF8A4C]" />
             <StarDoodle
-              className="twinkle absolute -left-3 bottom-0 !h-3 !w-3 text-[#b9aaf7]"
+              className="twinkle absolute -left-3 bottom-0 !h-3 !w-3 text-[#C4B6FB]"
               style={{ ['--d' as string]: '1.1s' } as CSSProperties}
             />
             <ExchangeCard
@@ -200,8 +200,8 @@ export default function Onboarding() {
   return shell(
     <>
       {/* 品牌行：与导航栏同款 logo */}
-      <div className="relative mb-8 inline-flex items-center gap-2 text-lg font-extrabold tracking-tight text-[#211c16]">
-        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#6a4fe0] text-white shadow-[0_8px_18px_-8px_rgba(106,79,224,0.6)]">
+      <div className="relative mb-8 inline-flex items-center gap-2 text-lg font-extrabold tracking-tight text-[#18181B]">
+        <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#7C5CFC] text-white shadow-[0_8px_18px_-8px_rgba(106,79,224,0.6)]">
           <SwapIcon width={18} height={18} />
         </span>
         SkillSwap
@@ -215,10 +215,10 @@ export default function Onboarding() {
             <div
               className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-bold transition-all duration-200 ${
                 step > i
-                  ? 'bg-[#f1edfd] text-[#5739c4]'
+                  ? 'bg-[#F5F3FF] text-[#6D44F2]'
                   : step === i
-                  ? 'bg-[#6a4fe0] text-white shadow-[0_8px_18px_-8px_rgba(106,79,224,0.65)]'
-                  : 'border border-[#e1d8c9] text-[#9a9082]'
+                  ? 'bg-[#7C5CFC] text-white shadow-[0_8px_18px_-8px_rgba(106,79,224,0.65)]'
+                  : 'border border-[#E2E2E2] text-[#737373]'
               }`}
             >
               {step > i ? (
@@ -229,7 +229,7 @@ export default function Onboarding() {
               {label}
             </div>
             {i === 0 && (
-              <span className="h-0 w-5 border-t-2 border-dashed border-[#d9d0fb]" aria-hidden />
+              <span className="h-0 w-5 border-t-2 border-dashed border-[#DED7FE]" aria-hidden />
             )}
           </div>
         ))}
@@ -241,7 +241,7 @@ export default function Onboarding() {
             先来
             <span className="relative inline-block">
               认识一下
-              <CurlyUnderline className="absolute -bottom-2 left-0 h-2.5 w-full text-[#c9bcf8]" />
+              <CurlyUnderline className="absolute -bottom-2 left-0 h-2.5 w-full text-[#C4B6FB]" />
             </span>
             你。
           </>
@@ -249,11 +249,11 @@ export default function Onboarding() {
           '那，你想学什么？'
         )}
       </h1>
-      <p className="mt-3 text-[15px] text-[#5c5446]">
+      <p className="mt-3 text-[15px] text-[#525252]">
         {isTeach
           ? '你有什么可以拿出来交换的？随便点几个就好。'
           : '有什么东西，你一直想学？'}
-        <span className="ml-1 text-sm text-[#9a9082]">
+        <span className="ml-1 text-sm text-[#737373]">
           已选 {selected.length}/{MAX}
         </span>
       </p>
@@ -271,12 +271,12 @@ export default function Onboarding() {
               className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2.5 text-sm font-bold transition-all duration-150 active:scale-95 ${
                 active
                   ? isTeach
-                    ? '-rotate-1 border-[#6a4fe0] bg-[#f1edfd] text-[#5739c4] shadow-[0_6px_14px_-8px_rgba(106,79,224,0.5)]'
-                    : 'rotate-1 border-[#f2734e] bg-[#fdebe3] text-[#bc4424] shadow-[0_6px_14px_-8px_rgba(242,115,78,0.5)]'
+                    ? '-rotate-1 border-[#7C5CFC] bg-[#F5F3FF] text-[#6D44F2] shadow-[0_6px_14px_-8px_rgba(106,79,224,0.5)]'
+                    : 'rotate-1 border-[#FF8A4C] bg-[#FFF3EC] text-[#E2702F] shadow-[0_6px_14px_-8px_rgba(242,115,78,0.5)]'
                   : disabled
-                  ? 'border-[#ece6dc] bg-transparent text-[#c9bfae]'
-                  : `border-[#e1d8c9] bg-white text-[#5c5446] shadow-card hover:-translate-y-0.5 ${
-                      isTeach ? 'hover:border-[#c9bcf8]' : 'hover:border-[#f8c0ab]'
+                  ? 'border-[#EAEAEA] bg-transparent text-[#c9bfae]'
+                  : `border-[#E2E2E2] bg-white text-[#525252] shadow-card hover:-translate-y-0.5 ${
+                      isTeach ? 'hover:border-[#C4B6FB]' : 'hover:border-[#f8c0ab]'
                     } ${idx % 2 === 0 ? 'hover:-rotate-1' : 'hover:rotate-1'}`
               }`}
             >

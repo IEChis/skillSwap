@@ -1,4 +1,6 @@
-import type { User, MatchResult } from '../types';
+import type { User, MatchResult, ExchangePlan, ExchangePlanWeek } from '../types';
+
+export type { ExchangePlan, ExchangePlanWeek } from '../types';
 
 /* ================================================================
  * SkillSwap · AI 技能交换助手
@@ -83,27 +85,8 @@ export async function generateMatchReason(
 /* ----------------------------------------------------------------
  * 2) 交换计划 —— 具体应该怎么交换？（4 周、双方对等）
  * ---------------------------------------------------------------- */
-export interface ExchangePlanWeek {
-  week: number;
-  youTopic: string; // 你教的内容
-  theyTopic: string; // TA 教的内容
-}
-
-export interface ExchangePlan {
-  youTeach: string;
-  theyTeach: string;
-  weeklyHours: string;
-  weeks: ExchangePlanWeek[];
-  reciprocityNote: string;
-}
-
-export async function generateExchangePlan(
-  me: User,
-  other: User,
-  m: MatchResult,
-): Promise<ExchangePlan> {
-  await delay(1600); // 模拟「分析 / 设计 / 生成」耗时
-
+/** 同步生成方案主体（纯函数、零延迟）：查看方案弹窗等需要「点开即见」的场景直接用它 */
+export function buildExchangePlan(me: User, other: User, m: MatchResult): ExchangePlan {
   const youTeach = m.iTeachThem[0] ?? me.canTeach[0]?.name ?? '你的技能';
   const theyTeach = m.iLearnFromThem[0] ?? other.canTeach[0]?.name ?? '对方的技能';
 
@@ -124,6 +107,17 @@ export async function generateExchangePlan(
     // 互惠约束：双方每周投入时间一致，谁都不只是「被教」的一方。
     reciprocityNote: `每周你教 ${youTeach} 与 ${other.name} 教 ${theyTeach} 的时间保持一致（各约 1 小时），双方投入对等、互惠进行，避免出现一方持续教学、另一方只接受学习的情况。`,
   };
+}
+
+export async function generateExchangePlan(
+  me: User,
+  other: User,
+  m: MatchResult,
+  opts?: { instant?: boolean },
+): Promise<ExchangePlan> {
+  // instant：需要快速出结果的场景；默认保留舞台化的加载演出（匹配详情页）
+  await delay(opts?.instant ? 250 : 1600);
+  return buildExchangePlan(me, other, m);
 }
 
 /* ----------------------------------------------------------------

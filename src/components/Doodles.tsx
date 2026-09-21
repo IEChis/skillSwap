@@ -305,7 +305,7 @@ export function CardLinkArrows({ className, style }: D) {
           refY="7"
           orient="auto"
         >
-          <path d="M2 2 L12 7 L2 12" stroke="#6a4fe0" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M2 2 L12 7 L2 12" stroke="#7C5CFC" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         </marker>
         <marker
           id="cardlink-o"
@@ -316,14 +316,14 @@ export function CardLinkArrows({ className, style }: D) {
           refY="7"
           orient="auto"
         >
-          <path d="M2 2 L12 7 L2 12" stroke="#f2734e" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M2 2 L12 7 L2 12" stroke="#FF8A4C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         </marker>
       </defs>
       {/* 紫：从「我能教 Python」卡右缘外侧（红框标注高度）出发 → 指向「我想学 摄影」卡左上角
           （起点离开紫色卡片，不接触） */}
       <path
         d="M195 98 C 240 94 288 132 310 180"
-        stroke="#6a4fe0"
+        stroke="#7C5CFC"
         strokeWidth="2.6"
         strokeLinecap="round"
         markerEnd="url(#cardlink-p)"
@@ -332,7 +332,7 @@ export function CardLinkArrows({ className, style }: D) {
           再向上指向「我能教 Python」卡的底部（起点刻意离开橙色卡片，不接触） */}
       <path
         d="M256 240 C 210 252 165 196 152 136"
-        stroke="#f2734e"
+        stroke="#FF8A4C"
         strokeWidth="2.6"
         strokeLinecap="round"
         markerEnd="url(#cardlink-o)"
@@ -349,12 +349,12 @@ export function CardLinkArrows({ className, style }: D) {
 export function CurvedSwapArrows({ className, style }: D) {
   return (
     <svg viewBox="0 0 120 92" className={className} style={style} fill="none" aria-hidden>
-      {/* 紫：左下 → 右上（我教你） */}
-      <path d="M22 68C34 36 76 28 96 42" stroke="#6a4fe0" strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M87 34l11 7-13 5" stroke="#6a4fe0" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-      {/* 橙：右上 → 左下（TA 教你） */}
-      <path d="M98 30C86 62 44 70 24 56" stroke="#f2734e" strokeWidth="2.6" strokeLinecap="round" />
-      <path d="M33 64l-11-7 13-5" stroke="#f2734e" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      {/* 紫：左 → 右，从上方绕（我教你） */}
+      <path d="M18 56C34 24 76 18 98 32" stroke="#7C5CFC" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M89 24l11 7-13 5" stroke="#7C5CFC" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      {/* 橙：右 → 左，从下方绕（TA 教你） */}
+      <path d="M102 42C86 74 44 82 22 68" stroke="#FF8A4C" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M31 76l-11-7 13-5" stroke="#FF8A4C" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

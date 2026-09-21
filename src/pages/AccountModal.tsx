@@ -14,18 +14,18 @@ export default function AccountModal({ open, onClose }: { open: boolean; onClose
           <div className="flex items-center gap-3">
             <Avatar name={me.name} size={52} />
             <div>
-              <p className="font-semibold text-[#211c16]">{me.name}</p>
-              <p className="text-xs text-[#9a9082]">{me.city}</p>
+              <p className="font-semibold text-[#18181B]">{me.name}</p>
+              <p className="text-xs text-[#737373]">{me.city}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 text-center">
-            <div className="rounded-xl bg-[#f1edfd] py-3">
-              <p className="text-xl font-bold text-[#5739c4]">{me.canTeach.length}</p>
-              <p className="text-xs text-[#9a9082]">我能帮你</p>
+            <div className="rounded-xl bg-[#F5F3FF] py-3">
+              <p className="text-xl font-bold text-[#6D44F2]">{me.canTeach.length}</p>
+              <p className="text-xs text-[#737373]">我能帮你</p>
             </div>
-            <div className="rounded-xl bg-[#fdebe3] py-3">
-              <p className="text-xl font-bold text-[#bc4424]">{me.wantToLearn.length}</p>
-              <p className="text-xs text-[#9a9082]">我正在找</p>
+            <div className="rounded-xl bg-[#FFF3EC] py-3">
+              <p className="text-xl font-bold text-[#E2702F]">{me.wantToLearn.length}</p>
+              <p className="text-xs text-[#737373]">我正在找</p>
             </div>
           </div>
 
@@ -34,7 +34,7 @@ export default function AccountModal({ open, onClose }: { open: boolean; onClose
           </button>
 
           {!confirm ? (
-            <button className="btn-ghost w-full text-sm text-[#9a9082]" onClick={() => setConfirm(true)}>
+            <button className="btn-ghost w-full text-sm text-[#737373]" onClick={() => setConfirm(true)}>
               重置 Demo 数据
             </button>
           ) : (
@@ -53,10 +53,10 @@ export default function AccountModal({ open, onClose }: { open: boolean; onClose
               </div>
             </div>
           )}
-          <p className="text-center text-[11px] text-[#b3a99a]">数据仅保存在本机浏览器（localStorage）。</p>
+          <p className="text-center text-[11px] text-[#A1A1AA]">数据仅保存在本机浏览器（localStorage）。</p>
         </div>
       ) : (
-        <p className="py-6 text-center text-sm text-[#9a9082]">暂无账户信息。</p>
+        <p className="py-6 text-center text-sm text-[#737373]">暂无账户信息。</p>
       )}
     </Modal>
   );

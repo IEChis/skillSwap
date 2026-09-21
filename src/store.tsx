@@ -13,6 +13,7 @@ import type {
   LearnSkill,
   Exchange,
   ExchangeStatus,
+  ExchangePlan,
   MatchResult,
   ToastType,
   Category,
@@ -40,6 +41,8 @@ interface AppContextValue {
   exchanges: Exchange[];
   view: string;
   params: any;
+  /** 导航历史栈，供导航栏推断子页面所属的主分区 */
+  history: { view: string; params: any }[];
   navigate: (view: string, params?: any) => void;
   back: () => void;
   toast: (msg: string, type?: ToastType) => void;
@@ -59,9 +62,21 @@ interface AppContextValue {
     method: string;
     weekly: string;
     message: string;
+    /** 在匹配详情页已生成的交换方案，随邀请一并保存 */
+    plan?: ExchangePlan;
   }) => void;
   updateExchangeStatus: (id: string, status: ExchangeStatus) => void;
+  removeExchange: (id: string) => void;
   sendMessage: (id: string, text: string) => void;
+  /** 匹配详情页生成方案后暂存，供发起邀请时一并写入交换 */
+  pendingPlans: Record<string, ExchangePlan>;
+  setGeneratedPlan: (otherId: string, plan: ExchangePlan) => void;
+  /** 将生成的方案写入某个交换（首次生成 / 查看方案时按需补全） */
+  savePlan: (id: string, plan: ExchangePlan) => void;
+  /** 方案在双方确认后若要修改，需先提交、待对方确认 */
+  proposePlanEdit: (id: string, edited: ExchangePlan) => void;
+  /** 确认方案：无待确认修改则直接确认；有待确认修改则采纳修改并确认 */
+  confirmPlan: (id: string) => void;
   resetDemo: () => void;
   addSkillModal: { open: boolean; mode: 'teach' | 'learn'; editId?: string };
   openAddSkill: (mode: 'teach' | 'learn', editId?: string) => void;
@@ -81,6 +96,7 @@ const DEFAULT_CITY = '广州';
 export function AppProvider({ children }: { children: ReactNode }) {
   const [me, setMe] = useState<User | null>(() => loadMe());
   const [exchanges, setExchanges] = useState<Exchange[]>(() => loadExchanges());
+  const [pendingPlans, setPendingPlans] = useState<Record<string, ExchangePlan>>({});
   const [view, setView] = useState<string>(() => (loadMe() ? 'home' : 'onboarding'));
   const [params, setParams] = useState<any>({});
   const [history, setHistory] = useState<{ view: string; params: any }[]>([]);
@@ -234,7 +250,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
       method: string;
       weekly: string;
       message: string;
+      plan?: ExchangePlan;
     }) => {
+      const plan = e.plan ?? pendingPlans[e.otherId];
       const ex: Exchange = {
         id: uid('ex'),
         meId: 'me',
@@ -247,6 +265,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         weekly: e.weekly,
         message: e.message,
         status: 'pending',
+        direction: 'out',
+        plan: plan ? { ...plan, confirmed: false, pendingEdit: null } : undefined,
         createdAt: Date.now(),
         messages: [
           { from: 'me', text: e.message, at: Date.now() },
@@ -256,13 +276,87 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const next = [ex, ...exchanges];
       setExchanges(next);
       saveExchanges(next);
+      // 该对象的临时方案已写入交换，清除缓存
+      if (pendingPlans[e.otherId]) {
+        setPendingPlans((p) => {
+          const { [e.otherId]: _drop, ...rest } = p;
+          return rest;
+        });
+      }
       toast('交换邀请已发送', 'success');
+    },
+    [exchanges, pendingPlans, toast],
+  );
+
+  const setGeneratedPlan = useCallback((otherId: string, plan: ExchangePlan) => {
+    setPendingPlans((p) => ({ ...p, [otherId]: plan }));
+  }, []);
+
+  const savePlan = useCallback(
+    (id: string, plan: ExchangePlan) => {
+      const next = exchanges.map((x) =>
+        x.id === id ? { ...x, plan: { ...plan, confirmed: x.plan?.confirmed ?? false, pendingEdit: x.plan?.pendingEdit ?? null } } : x,
+      );
+      setExchanges(next);
+      saveExchanges(next);
+    },
+    [exchanges],
+  );
+
+  const confirmPlan = useCallback(
+    (id: string) => {
+      const next = exchanges.map((x) => {
+        if (x.id !== id || !x.plan) return x;
+        // 有待确认修改则采纳修改并确认；否则直接确认当前方案
+        const adopted = x.plan.pendingEdit ?? x.plan;
+        return { ...x, plan: { ...adopted, confirmed: true, pendingEdit: null } };
+      });
+      setExchanges(next);
+      saveExchanges(next);
+      const ex = exchanges.find((x) => x.id === id);
+      if (ex) toast('交换方案已确认', 'success');
+    },
+    [exchanges, toast],
+  );
+
+  const proposePlanEdit = useCallback(
+    (id: string, edited: ExchangePlan) => {
+      const next = exchanges.map((x) =>
+        x.id === id && x.plan ? { ...x, plan: { ...x.plan, pendingEdit: edited } } : x,
+      );
+      setExchanges(next);
+      saveExchanges(next);
+      const ex = exchanges.find((x) => x.id === id);
+      toast('方案修改已发送给对方，等待确认…', 'info');
+      // 单端演示：模拟对方在 2.6s 后同意修改
+      setTimeout(() => {
+        setExchanges((cur) =>
+          cur.map((x) => {
+            if (x.id !== id || !x.plan?.pendingEdit) return x;
+            return { ...x, plan: { ...x.plan.pendingEdit, confirmed: true, pendingEdit: null } };
+          }),
+        );
+        saveExchanges(
+          exchanges.map((x) =>
+            x.id === id && x.plan?.pendingEdit ? { ...x, plan: { ...x.plan.pendingEdit, confirmed: true, pendingEdit: null } } : x,
+          ),
+        );
+        if (ex) toast(`${ex.otherName} 已同意你的方案修改`, 'success');
+      }, 2600);
     },
     [exchanges, toast],
   );
   const updateExchangeStatus = useCallback(
     (id: string, status: ExchangeStatus) => {
       const next = exchanges.map((x) => (x.id === id ? { ...x, status } : x));
+      setExchanges(next);
+      saveExchanges(next);
+    },
+    [exchanges],
+  );
+  const removeExchange = useCallback(
+    (id: string) => {
+      const next = exchanges.filter((x) => x.id !== id);
       setExchanges(next);
       saveExchanges(next);
     },
@@ -307,6 +401,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     exchanges,
     view,
     params,
+    history,
     navigate,
     back,
     toast,
@@ -320,7 +415,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     finishOnboarding,
     createExchange,
     updateExchangeStatus,
+    removeExchange,
     sendMessage,
+    pendingPlans,
+    setGeneratedPlan,
+    savePlan,
+    confirmPlan,
+    proposePlanEdit,
     resetDemo,
     addSkillModal,
     openAddSkill,

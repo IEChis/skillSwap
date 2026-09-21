@@ -98,17 +98,17 @@ export function getSkillStats(users: User[]): Map<string, { learn: number; teach
 /**
  * 分类色 — 低饱和「灰调水彩」色板。
  * 刻意不用高饱和原色（indigo-600/pink-500/emerald-500…），那些在暖纸底
- * （#fffdf8 / #fbf7f0）上会发荧光、显得有攻击性。这里统一压低饱和度、
+ * （#FFFFFF / #F7F7F7）上会发荧光、显得有攻击性。这里统一压低饱和度、
  * 抬高亮度，色相仍可区分，与全站紫/陶土色系兼容。
  */
 export const CATEGORY_COLOR: Record<Category, string> = {
-  编程: '#7c6bc8',
-  语言: '#6d9bc3',
-  设计: '#c4779b',
-  摄影: '#d98a5f',
-  音乐: '#9b87d6',
-  运动: '#6fae8e',
-  职业技能: '#5f9aa3',
-  生活技能: '#c19a55',
-  其他: '#9a9082',
+  编程: '#7C5CFC', // 紫
+  语言: '#4D9FFF', // 蓝
+  设计: '#F05B9B', // 粉
+  摄影: '#FF8A4C', // 橙
+  音乐: '#F5C84C', // 黄
+  运动: '#42C98A', // 绿
+  职业技能: '#F45B69', // 红
+  生活技能: '#28C7D9', // 青
+  其他: '#A1A1AA', // 中性灰
 };

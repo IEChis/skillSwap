@@ -22,7 +22,7 @@ export default function MyMatches() {
   return (
     <div className="animate-fade mx-auto max-w-5xl px-6 py-8 sm:py-10">
       <div className="relative w-fit">
-        <h1 className="text-2xl font-bold text-[#211c16]">
+        <h1 className="text-2xl font-bold text-[#18181B]">
           刚好可以
           <span className="relative inline-block">
             交换
@@ -33,7 +33,7 @@ export default function MyMatches() {
 
       {matches.length > 0 ? (
         <>
-          <p className="mt-2 text-sm text-[#9a9082]">{line}</p>
+          <p className="mt-2 text-sm text-[#737373]">{line}</p>
           <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
             {matches.map((m, i) => (
               <div key={m.user.id} style={{ ['--d' as any]: `${i * 0.05}s` }}>
