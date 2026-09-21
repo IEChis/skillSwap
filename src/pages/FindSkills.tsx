@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useApp } from '../store';
 import { CATEGORIES } from '../data/skills';
-import { getSkillStats, norm, CATEGORY_COLOR } from '../utils/matching';
+import { getSkillStats, norm, CATEGORY_COLOR, hexAlpha } from '../utils/matching';
 import { SearchIcon, ArrowLeftIcon } from '../components/Icons';
 import { MagnifierDoodle } from '../components/Doodles';
 import { SkillChip } from '../components/SwapPrimitives';
@@ -19,6 +19,23 @@ export default function FindSkills() {
   const { allUsers, navigate } = useApp();
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState<Category | '全部'>('全部');
+  const switchTimer = useRef<number | undefined>(undefined);
+
+  // 切换分类：若页面已滚动，先平滑滚回顶部，滚到位后再换内容。
+  // 否则结果骤减时页面总高瞬间低于滚动位置，浏览器会把 scrollTop 硬夹到 0，产生"闪跳"感。
+  const pickCat = (c: Category | '全部') => {
+    if (c === cat) return;
+    const reduceMotion =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (window.scrollY > 8 && !reduceMotion) {
+      window.clearTimeout(switchTimer.current);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      switchTimer.current = window.setTimeout(() => setCat(c), 340);
+    } else {
+      setCat(c);
+    }
+  };
 
   const catalog = useMemo<SkillEntry[]>(() => {
     const stats = getSkillStats(allUsers);
@@ -53,7 +70,7 @@ export default function FindSkills() {
           <MagnifierDoodle className="absolute -right-[52px] -top-5 w-12 -rotate-10 text-[#a394ec]" />
         </span>
       </h1>
-      <p className="mt-3 text-sm text-[#5c5446]">看看大家都在学什么，说不定下一个就是你想要的。</p>
+      <p className="mt-3 text-sm text-[#9a9082]">看看大家都在学什么，说不定下一个就是你想要的。</p>
 
       {/* search */}
       <div className="relative mt-6 max-w-xl">
@@ -74,7 +91,7 @@ export default function FindSkills() {
       <div className="no-scrollbar -mx-1 -my-2 mt-6 flex gap-2 overflow-x-auto px-1 py-2">
         <button
           className={`chip chip-filter shrink-0 ${cat === '全部' ? 'chip-active chip-pop' : ''}`}
-          onClick={() => setCat('全部')}
+          onClick={() => pickCat('全部')}
         >
           全部
         </button>
@@ -90,7 +107,7 @@ export default function FindSkills() {
                   ? { borderColor: cc, background: cc + '14', color: cc }
                   : undefined
               }
-              onClick={() => setCat(c)}
+              onClick={() => pickCat(c)}
             >
               {c}
             </button>
@@ -98,15 +115,22 @@ export default function FindSkills() {
         })}
       </div>
 
-      {/* grid */}
-      <div className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-        {filtered.map((s) => {
+      {/* grid —— key 挂 cat：切换分类时卡片带轻微阶梯延迟依次浮现 */}
+      <div key={cat} className="mt-7 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {filtered.map((s, i) => {
           const c = CATEGORY_COLOR[s.category];
           return (
             <button
               key={s.key}
               onClick={() => navigate('skillDetail', { skill: s.key, name: s.name, category: s.category })}
-              className="card match-card arrow-reveal flex flex-col items-start p-4 text-left"
+              className="card match-card arrow-reveal animate-rise flex flex-col items-start p-4 text-left"
+              style={{
+                ['--d' as string]: `${Math.min(i * 0.035, 0.35)}s`,
+                // hover 光晕跟随卡片自身分类色
+                ['--card-glow-border' as string]: c,
+                ['--card-glow' as string]: hexAlpha(c, 0.35),
+                ['--card-glow-soft' as string]: hexAlpha(c, 0.07),
+              }}
             >
               <div className="flex w-full items-start justify-between">
                 <span
